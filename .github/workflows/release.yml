@@ -13,6 +13,8 @@ jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    env:
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -53,13 +55,11 @@ jobs:
           generate_release_notes: true
 
       - name: Publish to VS Code Marketplace
-        if: startsWith(github.ref, 'refs/tags/') && secrets.VSCE_PAT != ''
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: npx @vscode/vsce publish --packagePath "${{ steps.vsix.outputs.file }}" -p "$VSCE_PAT" --no-yarn
 
       - name: Publish to Open VSX
-        if: startsWith(github.ref, 'refs/tags/') && secrets.OVSX_PAT != ''
-        env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        if: startsWith(github.ref, 'refs/tags/') && env.OVSX_PAT != ''
         run: npx ovsx publish "${{ steps.vsix.outputs.file }}" -p "$OVSX_PAT"
