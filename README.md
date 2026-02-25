@@ -19,7 +19,15 @@
 </p>
 
 <p align="center">
-  <img src="media/demo.png" alt="ClawdContext in action — sidebar, diagnostics, and CER dashboard" width="640" />
+  <img src="media/demo.png" alt="ClawdContext — CER dashboard and context health overview" width="640" />
+</p>
+
+<p align="center">
+  <img src="media/demo1.png" alt="ClawdContext — Markdown OS linter diagnostics and quick fixes" width="640" />
+</p>
+
+<p align="center">
+  <img src="media/demo2.png" alt="ClawdContext — Security scanner and lessons governance" width="640" />
 </p>
 
 ---
