@@ -23,6 +23,13 @@ import {
 import { pruneLessons, promoteLessons } from './commands/lessonsCommands';
 import { generateReport } from './commands/generateReport';
 import { showDashboard } from './commands/showDashboard';
+import {
+  aiTestConnection,
+  aiReviewConfig,
+  aiExplainDiagnostic,
+  aiSuggestRefactor,
+  aiSecurityReview,
+} from './ai';
 
 export function activate(context: vscode.ExtensionContext): void {
   console.log('ClawdContext activated');
@@ -88,6 +95,12 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('clawdcontext.moveToLessons', moveToLessonsCommand),
     vscode.commands.registerCommand('clawdcontext.archiveDeprecated', archiveDeprecatedCommand),
     vscode.commands.registerCommand('clawdcontext.analyzeBloat', analyzeBloatCommand),
+    // --- AI commands (optional — gracefully degrade when not configured) ---
+    vscode.commands.registerCommand('clawdcontext.aiTestConnection', aiTestConnection),
+    vscode.commands.registerCommand('clawdcontext.aiReviewConfig', aiReviewConfig),
+    vscode.commands.registerCommand('clawdcontext.aiExplainDiagnostic', aiExplainDiagnostic),
+    vscode.commands.registerCommand('clawdcontext.aiSuggestRefactor', aiSuggestRefactor),
+    vscode.commands.registerCommand('clawdcontext.aiSecurityReview', aiSecurityReview),
   );
 
   // --- File watcher ---

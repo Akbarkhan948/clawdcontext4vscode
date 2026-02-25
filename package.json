@@ -133,6 +133,31 @@
       {
         "command": "clawdcontext.analyzeBloat",
         "title": "ClawdContext: Analyze Kernel Bloat"
+      },
+      {
+        "command": "clawdcontext.aiTestConnection",
+        "title": "ClawdContext AI: Test Connection",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "clawdcontext.aiReviewConfig",
+        "title": "ClawdContext AI: Review Agent Config",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "clawdcontext.aiExplainDiagnostic",
+        "title": "ClawdContext AI: Explain Diagnostic",
+        "icon": "$(question)"
+      },
+      {
+        "command": "clawdcontext.aiSuggestRefactor",
+        "title": "ClawdContext AI: Suggest Refactor",
+        "icon": "$(git-pull-request)"
+      },
+      {
+        "command": "clawdcontext.aiSecurityReview",
+        "title": "ClawdContext AI: Security Review",
+        "icon": "$(shield)"
       }
     ],
     "viewsContainers": {
@@ -256,6 +281,55 @@
           "type": "boolean",
           "default": true,
           "description": "Suppress security findings inside markdown fenced code blocks (``` ... ```). These are documentation examples, not executable threats."
+        },
+        "clawdcontext.ai.provider": {
+          "type": "string",
+          "default": "none",
+          "enum": ["none", "openai", "anthropic", "ollama"],
+          "enumDescriptions": [
+            "AI features disabled (default)",
+            "OpenAI (GPT-4o, GPT-4o-mini, etc.)",
+            "Anthropic (Claude Sonnet, Opus, Haiku)",
+            "Ollama (local models — no API key needed)"
+          ],
+          "description": "AI provider for optional intelligent features. Set to 'none' to keep the extension fully offline.",
+          "markdownDescription": "AI provider for optional intelligent features.\n\n- `none` — AI disabled (default, fully offline)\n- `openai` — [OpenAI API](https://platform.openai.com/)\n- `anthropic` — [Anthropic API](https://console.anthropic.com/)\n- `ollama` — [Ollama](https://ollama.ai/) (local, no API key needed)"
+        },
+        "clawdcontext.ai.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for OpenAI or Anthropic. Not needed for Ollama. Stored in VS Code settings (use Secrets API or env var for production).",
+          "markdownDescription": "API key for your AI provider.\n\n- **OpenAI**: starts with `sk-`\n- **Anthropic**: starts with `sk-ant-`\n- **Ollama**: leave empty (no key needed)"
+        },
+        "clawdcontext.ai.model": {
+          "type": "string",
+          "default": "",
+          "description": "Model name override. Leave empty for defaults: gpt-4o-mini (OpenAI), claude-sonnet-4-20250514 (Anthropic), llama3.2 (Ollama).",
+          "markdownDescription": "Model name override. Leave empty for smart defaults:\n\n| Provider | Default Model |\n|---|---|\n| OpenAI | `gpt-4o-mini` |\n| Anthropic | `claude-sonnet-4-20250514` |\n| Ollama | `llama3.2` |"
+        },
+        "clawdcontext.ai.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Custom base URL for the AI API. Useful for enterprise proxies, Azure OpenAI, or self-hosted endpoints. Leave empty for defaults.",
+          "markdownDescription": "Custom base URL override.\n\nDefaults:\n- OpenAI: `https://api.openai.com`\n- Anthropic: `https://api.anthropic.com`\n- Ollama: `http://localhost:11434`\n\nExamples:\n- Azure OpenAI: `https://my-resource.openai.azure.com`\n- Enterprise proxy: `https://ai-proxy.mycompany.com`"
+        },
+        "clawdcontext.ai.caCertPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a PEM certificate bundle for enterprise TLS/SSL. Required when behind corporate proxies with custom CA certificates (e.g., ZScaler, Netskope).",
+          "markdownDescription": "Path to a PEM CA certificate bundle file.\n\nRequired for enterprise environments with custom CA certificates (e.g., ZScaler, Netskope, Bluecoat).\n\nThe certificate is merged with system root CAs so both enterprise and public endpoints work.\n\nExample: `/etc/ssl/certs/enterprise-ca.pem` or `~/certs/corp-ca-bundle.pem`"
+        },
+        "clawdcontext.ai.rejectUnauthorized": {
+          "type": "boolean",
+          "default": true,
+          "description": "Verify TLS certificates. Set to false only for debugging with self-signed certificates. NOT recommended for production.",
+          "markdownDescription": "Verify TLS/SSL certificates.\n\n⚠️ Set to `false` **only** for debugging with self-signed certs. This disables certificate validation entirely.\n\nFor enterprise proxies, prefer `clawdcontext.ai.caCertPath` instead."
+        },
+        "clawdcontext.ai.timeout": {
+          "type": "number",
+          "default": 30000,
+          "description": "AI request timeout in milliseconds. Increase for large prompts or slow connections.",
+          "markdownDescription": "AI request timeout in milliseconds.\n\n- Default: `30000` (30 seconds)\n- Ollama with large models: consider `60000`+\n- Enterprise proxies: consider `45000`+"
         }
       }
     },

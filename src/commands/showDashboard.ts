@@ -3,6 +3,7 @@ import type { ContextBudget } from '../analyzers/tokenAnalyzer';
 import { analyzePositionalAttention } from '../analyzers/tokenAnalyzer';
 import type { LintResult } from '../analyzers/diagnosticsProvider';
 import { state } from './analyzeWorkspace';
+import { isAiEnabled, getAiConfig } from '../ai';
 
 /**
  * Open the CER dashboard webview panel.
@@ -55,6 +56,7 @@ ${renderMetrics(budget)}
 </div>
 ${renderSecurityTable(lintResult)}
 ${renderPositionalMap(budget)}
+${renderAiStatus()}
 
 <p class="quote">"Treat context like OS memory: budget it, compact it, page it intelligently."</p>
 <p class="footer">ClawdContext — ${budget.allFiles.length} files · ${(budget.alwaysLoadedTokens + budget.onDemandTokens).toLocaleString()} total tokens</p>
@@ -181,6 +183,36 @@ function renderPositionalMap(budget: ContextBudget): string {
   ${items}</div>`;
 }
 
+function renderAiStatus(): string {
+  const config = getAiConfig();
+  const enabled = isAiEnabled();
+
+  if (config.provider === 'none') {
+    return `<div class="card ai-card">
+  <h2>🤖 AI Features</h2>
+  <div class="ai-off">Disabled <span style="color:var(--muted);font-size:12px">— Set <code>clawdcontext.ai.provider</code> in settings to enable</span></div>
+</div>`;
+  }
+
+  const providerLabel = config.provider.charAt(0).toUpperCase() + config.provider.slice(1);
+  const statusColor = enabled ? '#059669' : '#D97706';
+  const statusText = enabled ? 'Ready' : 'Missing API Key';
+  const certLabel = config.caCertPath ? `✅ Custom CA loaded` : 'System CAs';
+  const tlsLabel = config.rejectUnauthorized ? 'Verified' : '⚠️ Disabled';
+
+  return `<div class="card ai-card">
+  <h2>🤖 AI Features</h2>
+  <div class="ai-grid">
+    <div class="ai-item"><span class="ai-label">Provider</span><span class="ai-val">${providerLabel}</span></div>
+    <div class="ai-item"><span class="ai-label">Model</span><span class="ai-val">${config.model}</span></div>
+    <div class="ai-item"><span class="ai-label">Status</span><span class="ai-val" style="color:${statusColor};font-weight:600">${statusText}</span></div>
+    <div class="ai-item"><span class="ai-label">TLS</span><span class="ai-val">${tlsLabel}</span></div>
+    <div class="ai-item"><span class="ai-label">Certificates</span><span class="ai-val">${certLabel}</span></div>
+    <div class="ai-item"><span class="ai-label">Endpoint</span><span class="ai-val" style="font-size:11px">${config.baseUrl}</span></div>
+  </div>
+</div>`;
+}
+
 // ---------------------------------------------------------------------------
 // CSS + JS (kept separate for readability)
 // ---------------------------------------------------------------------------
@@ -207,7 +239,9 @@ table{width:100%;border-collapse:collapse}th{text-align:left;padding:5px 8px;bor
 .pos-zone{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600}
 .pos-start{background:#05966940;color:#059669}.pos-middle{background:#DC262630;color:#DC2626}.pos-end{background:#2563EB30;color:#2563EB}
 .quote{font-style:italic;color:var(--muted);border-left:3px solid ${cerColor};padding-left:12px;margin-top:20px;font-size:13px}
-.footer{text-align:center;color:var(--muted);font-size:11px;margin-top:20px}`;
+.footer{text-align:center;color:var(--muted);font-size:11px;margin-top:20px}
+.ai-card{margin-top:14px}.ai-off{font-size:13px;color:var(--muted)}.ai-off code{background:var(--border);padding:1px 5px;border-radius:3px;font-size:12px}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.ai-item{display:flex;flex-direction:column}.ai-label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}.ai-val{font-size:13px;margin-top:2px}`;
 }
 
 function getWhatIfScript(budget: ContextBudget): string {
