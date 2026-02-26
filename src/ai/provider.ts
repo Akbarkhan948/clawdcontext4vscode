@@ -93,7 +93,7 @@ export function getAiConfig(): AiConfig {
     rejectUnauthorized: cfg.get<boolean>('rejectUnauthorized', true),
     timeout: cfg.get<number>('timeout', 30000),
     azureDeployment: cfg.get<string>('azureDeployment', ''),
-    azureApiVersion: cfg.get<string>('azureApiVersion', '2024-10-21'),
+    azureApiVersion: cfg.get<string>('azureApiVersion', '2024-12-01-preview'),
   };
 }
 
@@ -294,7 +294,7 @@ async function completeAnthropic(config: AiConfig, options: AiCompletionOptions)
 async function completeAzureOpenAI(config: AiConfig, options: AiCompletionOptions): Promise<AiCompletionResult> {
   const start = Date.now();
   const deployment = config.azureDeployment || config.model;
-  const apiVersion = config.azureApiVersion || '2024-10-21';
+  const apiVersion = config.azureApiVersion || '2024-12-01-preview';
   const url = `${config.baseUrl}/openai/deployments/${deployment}/chat/completions?api-version=${apiVersion}`;
 
   const body = JSON.stringify({

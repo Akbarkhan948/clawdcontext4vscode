@@ -33,11 +33,12 @@
 - AI providers: 5 (OpenAI, Anthropic, Azure OpenAI, Ollama, DeepSeek)
 
 ### Security
-- **Path traversal prevention** — All AI-generated file paths validated with `sanitizePath()`: rejects absolute paths, `../` traversal, and non-markdown extensions
+- **Path traversal prevention** — All AI-generated file paths validated with `sanitizePath()`: rejects absolute paths, `../` traversal, control chars, and writes outside known agent paths
 - **Shell injection fix** — All `execSync` calls in CER diff tracking replaced with `execFileSync` using argument arrays (no shell interpolation)
-- **CER threshold config respected** — Fixed bug where hard-coded 0.6/0.3 thresholds overrode user-configured values
+- **CER threshold config respected** — CER warning/critical settings now apply as direct CER cutoffs (matching setting names/docs)
 - **Prune lessons loop fix** — Fixed early exit that skipped remaining lesson files after the first clean file
 - **Lint cleanup** — Resolved all ESLint warnings: consistent type imports, empty catch blocks, unused variables
+- **Smoke test coverage** — Added targeted assertions for path sanitization and CER threshold classification
 
 ## [0.3.0] — 2026-02-25
 

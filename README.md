@@ -345,19 +345,23 @@ No files yet? Run:
 | `clawdcontext.ai.provider` | `none` | AI provider: `none`, `openai`, `anthropic`, `azure-openai`, `ollama`, `deepseek` |
 | `clawdcontext.ai.model` | `""` | Model name (e.g., `gpt-4o`, `claude-sonnet-4-20250514`, `llama3`) |
 | `clawdcontext.ai.apiKey` | `""` | API key (stored in VS Code settings) |
-| `clawdcontext.ai.baseUrl` | `""` | Custom base URL (required for Ollama, Azure OpenAI) |
-| `clawdcontext.ai.maxTokens` | `4096` | Max tokens for AI responses |
+| `clawdcontext.ai.baseUrl` | `""` | Custom base URL override (required for Azure OpenAI endpoint, optional for others) |
+| `clawdcontext.ai.timeout` | `30000` | AI request timeout in milliseconds |
+| `clawdcontext.ai.maxTokens` | `4000` | Max tokens for AI responses |
 | `clawdcontext.ai.temperature` | `0.3` | Temperature for AI completions |
+| `clawdcontext.ai.azureDeployment` | `""` | Azure OpenAI deployment name |
+| `clawdcontext.ai.azureApiVersion` | `2024-12-01-preview` | Azure OpenAI API version |
 
 ### Enterprise mTLS Settings
 
 | Setting | Default | Description |
 |---|---|---|
-| `clawdcontext.ai.tls.pfxPath` | `""` | Path to PFX/P12 client certificate |
-| `clawdcontext.ai.tls.pfxPassphrase` | `""` | PFX passphrase |
-| `clawdcontext.ai.tls.certPath` | `""` | Path to PEM client certificate |
-| `clawdcontext.ai.tls.keyPath` | `""` | Path to PEM private key |
-| `clawdcontext.ai.tls.caPath` | `""` | Path to custom CA certificate |
+| `clawdcontext.ai.pfxPath` | `""` | Path to PFX/P12 client certificate |
+| `clawdcontext.ai.pfxPassphrase` | `""` | PFX passphrase |
+| `clawdcontext.ai.certPath` | `""` | Path to PEM client certificate |
+| `clawdcontext.ai.keyPath` | `""` | Path to PEM private key |
+| `clawdcontext.ai.caCertPath` | `""` | Path to custom CA certificate |
+| `clawdcontext.ai.rejectUnauthorized` | `true` | Verify TLS certificates (disable only for debugging) |
 
 ### Security Settings
 
@@ -365,7 +369,7 @@ No files yet? Run:
 |---|---|---|
 | `clawdcontext.securityAllowlist` | `[]` | SEC_* rule codes to suppress |
 | `clawdcontext.trustedDomains` | `[]` | Domains excluded from SEC_EXFIL_FETCH |
-| `clawdcontext.codeBlockAwareness` | `true` | Suppress findings inside code blocks |
+| `clawdcontext.securityCodeBlockAware` | `true` | Suppress findings inside fenced/inline code blocks |
 
 ## Supported Ecosystems / File Conventions
 
