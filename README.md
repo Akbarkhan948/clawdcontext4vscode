@@ -91,7 +91,7 @@ Each diagnostic comes with a **quick-fix code action** when applicable.
 | **Prune Stale Lessons** | Archive lessons past TTL |
 | **Archive Deprecated Entries** | Clean dead rules |
 
-14 core commands + 11 AI commands total. [Full command list →](https://github.com/yaamwebsolutions/clawdcontext4vscode#commands)
+15 core commands + 11 AI commands — 26 total. [Full command list →](https://github.com/yaamwebsolutions/clawdcontext4vscode#commands)
 
 ---
 
