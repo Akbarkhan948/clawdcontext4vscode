@@ -47,7 +47,7 @@ function getWorkspaceRoot(): string | undefined {
  */
 function isGitRepo(cwd: string): boolean {
   try {
-    child_process.execSync('git rev-parse --is-inside-work-tree', {
+    child_process.execFileSync('git', ['rev-parse', '--is-inside-work-tree'], {
       cwd,
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -64,7 +64,7 @@ function isGitRepo(cwd: string): boolean {
  */
 function getFileAtRef(cwd: string, ref: string, relPath: string): string | null {
   try {
-    return child_process.execSync(`git show ${ref}:${relPath}`, {
+    return child_process.execFileSync('git', ['show', `${ref}:${relPath}`], {
       cwd,
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -80,7 +80,7 @@ function getFileAtRef(cwd: string, ref: string, relPath: string): string | null 
  */
 function getCommitHash(cwd: string, ref: string): string {
   try {
-    return child_process.execSync(`git rev-parse --short ${ref}`, {
+    return child_process.execFileSync('git', ['rev-parse', '--short', ref], {
       cwd,
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -91,28 +91,13 @@ function getCommitHash(cwd: string, ref: string): string {
 }
 
 /**
- * Get the commit message for a ref.
- */
-function getCommitMessage(cwd: string, ref: string): string {
-  try {
-    return child_process.execSync(`git log -1 --format=%s ${ref}`, {
-      cwd,
-      encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe'],
-    }).trim();
-  } catch {
-    return '';
-  }
-}
-
-/**
  * List all agent .md files tracked by git.
  * Uses the current scan results + git to find files that existed in previous commits.
  */
 function listAgentFilesInRef(cwd: string, ref: string): string[] {
   try {
-    const output = child_process.execSync(
-      `git ls-tree -r --name-only ${ref}`,
+    const output = child_process.execFileSync(
+      'git', ['ls-tree', '-r', '--name-only', ref],
       { cwd, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'], maxBuffer: 1024 * 1024 },
     );
     const agentPatterns = [

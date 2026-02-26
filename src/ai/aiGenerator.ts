@@ -225,10 +225,10 @@ async function gatherProjectContext(): Promise<string> {
           const pkg = JSON.parse(raw);
           if (pkg.name) { context.push(`  Project name: ${pkg.name}`); }
           if (pkg.description) { context.push(`  Description: ${pkg.description}`); }
-        } catch {}
+        } catch { /* parse error — skip */ }
       }
     } catch {
-      // File doesn't exist
+      // File doesn't exist — skip
     }
   }
 
@@ -243,7 +243,7 @@ async function gatherProjectContext(): Promise<string> {
     if (dirs.length > 0) {
       context.push(`- Top-level directories: ${dirs.join(', ')}`);
     }
-  } catch {}
+  } catch { /* readDirectory error — skip */ }
 
   return context.length > 0 ? context.join('\n') : 'Minimal project — no standard config files detected.';
 }
@@ -261,9 +261,11 @@ function parseMultiFileResponse(
   let match;
 
   while ((match = filePattern.exec(content)) !== null) {
+    const safePath = sanitizePath(match[1]);
+    if (!safePath) { continue; } // Skip unsafe paths from AI response
     const fileContent = match[2].trim();
     files.push({
-      path: match[1].trim(),
+      path: safePath,
       content: fileContent,
       isNew: true,
       tokens: estimateTokens(fileContent),
@@ -302,4 +304,33 @@ function cleanOutput(text: string): string {
     cleaned = cleaned.replace(/^```\w*\s*\n?/, '').replace(/\n?```\s*$/, '');
   }
   return cleaned;
+}
+
+/**
+ * Sanitize an AI-generated file path to prevent workspace-escape writes.
+ * Rejects absolute paths, path traversal (../), and non-markdown extensions.
+ * Returns the sanitized relative path, or null if unsafe.
+ */
+export function sanitizePath(raw: string): string | null {
+  // Normalise separators and trim
+  let p = raw.trim().replace(/\\/g, '/');
+
+  // Reject absolute paths
+  if (p.startsWith('/') || /^[A-Za-z]:/.test(p)) { return null; }
+
+  // Resolve and reject traversal
+  const segments = p.split('/').filter(Boolean);
+  const resolved: string[] = [];
+  for (const seg of segments) {
+    if (seg === '..') { return null; }
+    if (seg !== '.') { resolved.push(seg); }
+  }
+  if (resolved.length === 0) { return null; }
+
+  p = resolved.join('/');
+
+  // Only allow markdown files in known agent paths
+  if (!p.endsWith('.md') && !p.endsWith('.json')) { return null; }
+
+  return p;
 }

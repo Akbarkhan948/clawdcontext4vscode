@@ -6,21 +6,38 @@
 - **CER diff tracking** — Compare context efficiency between git commits to pinpoint what changed CER
 - **Config presets** — `strict`, `balanced`, `permissive` workspace profiles for different team policies
 - **Dashboard export** — Save dashboard state as JSON or Markdown report artifacts
-- **Optional AI capabilities** — Multi-provider support (OpenAI, Anthropic/Claude, Ollama) with enterprise TLS/CA certificate support
+- **Optional AI capabilities** — Multi-provider support (OpenAI, Anthropic/Claude, Azure OpenAI, Ollama, DeepSeek) with enterprise mTLS/CA certificate support
   - `AI: Test Connection` — verify provider setup
   - `AI: Review Agent Config` — AI-powered CER and kernel optimization suggestions
   - `AI: Explain Diagnostic` — context-aware diagnostic explanations
   - `AI: Suggest Refactor` — AI-powered extraction recommendations (kernel → skills)
   - `AI: Security Review` — deep semantic security analysis beyond regex patterns
+  - `AI: Validate Agent Files` — full workspace validation with quality gates
+  - `AI: Validate This File` — single-file AI validation
+  - `AI: Generate Missing Files` — scaffold missing agent files from project context
+  - `AI: Generate / Regenerate File` — generate specific agent file (CLAUDE.md, SKILL.md, etc.)
+  - `AI: Fix Violations` — auto-fix diagnostics using AI with safe path handling
+  - `AI: Detect Contradictions` — semantic contradiction analysis across agent files
 - **Security scanner allowlist** — Suppress specific SEC_* rule codes for first-party skills
 - **Trusted domains** — Whitelist domains for SEC_EXFIL_FETCH pattern matching
 - **Code-block awareness** — Automatically suppress findings inside markdown fenced code blocks and inline backticks
+- **UI/UX overhaul** — Editor context menus, explorer context menus, submenus, walkthrough onboarding
+- **Interactive dashboard** — Buttons with postMessage for direct actions (analyze, export, bloat analysis)
 
 ### Changed
 - Expanded SKILL.md security scanner with 4 new pattern categories: supply-chain, SSRF, path traversal, privilege escalation (17 → 21 patterns)
 - Dashboard now shows AI provider status card
 - Security table shows active vs suppressed finding counts
-- Added 7 new AI settings, 3 security settings, and 3 new commands (20 total)
+- Added 27 settings, 8 menu contribution points, 2 submenus, 1 walkthrough
+- Total commands: 25 (14 core + 11 AI)
+- AI providers: 5 (OpenAI, Anthropic, Azure OpenAI, Ollama, DeepSeek)
+
+### Security
+- **Path traversal prevention** — All AI-generated file paths validated with `sanitizePath()`: rejects absolute paths, `../` traversal, and non-markdown extensions
+- **Shell injection fix** — All `execSync` calls in CER diff tracking replaced with `execFileSync` using argument arrays (no shell interpolation)
+- **CER threshold config respected** — Fixed bug where hard-coded 0.6/0.3 thresholds overrode user-configured values
+- **Prune lessons loop fix** — Fixed early exit that skipped remaining lesson files after the first clean file
+- **Lint cleanup** — Resolved all ESLint warnings: consistent type imports, empty catch blocks, unused variables
 
 ## [0.3.0] — 2026-02-25
 

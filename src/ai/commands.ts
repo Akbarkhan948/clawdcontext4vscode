@@ -11,8 +11,8 @@ import { isAiEnabled, aiComplete, testAiConnection, getAiConfig, getProviderLabe
 import { SYSTEM_PROMPT_ANALYST } from './prompts';
 import * as validator from './aiValidator';
 import * as generator from './aiGenerator';
+import { sanitizePath } from './aiGenerator';
 import { state, analyzeWorkspace } from '../commands/analyzeWorkspace';
-import { estimateTokens } from '../analyzers/tokenAnalyzer';
 import type { AgentFile } from '../analyzers/tokenAnalyzer';
 import type { Violation } from './aiValidator';
 
@@ -473,22 +473,27 @@ export async function aiGenerateMissing(): Promise<void> {
   }
 
   for (const f of result.files) {
+    const safePath = sanitizePath(f.path);
+    if (!safePath) {
+      vscode.window.showWarningMessage(`Skipped unsafe path: ${f.path}`);
+      continue;
+    }
     const action = await vscode.window.showInformationMessage(
-      `Generated ${f.path} (${f.tokens} tokens). Save?`,
+      `Generated ${safePath} (${f.tokens} tokens). Save?`,
       'Save', 'Preview', 'Skip',
     );
     if (action === 'Save' || action === 'Preview') {
       if (action === 'Preview') {
         const doc = await vscode.workspace.openTextDocument({ content: f.content, language: 'markdown' });
         await vscode.window.showTextDocument(doc);
-        const confirm = await vscode.window.showInformationMessage(`Save ${f.path}?`, 'Save', 'Discard');
+        const confirm = await vscode.window.showInformationMessage(`Save ${safePath}?`, 'Save', 'Discard');
         if (confirm !== 'Save') { continue; }
       }
       const ws = vscode.workspace.workspaceFolders?.[0];
       if (ws) {
-        const uri = vscode.Uri.joinPath(ws.uri, f.path);
+        const uri = vscode.Uri.joinPath(ws.uri, safePath);
         await vscode.workspace.fs.writeFile(uri, Buffer.from(f.content, 'utf8'));
-        vscode.window.showInformationMessage(`Saved ${f.path}`);
+        vscode.window.showInformationMessage(`Saved ${safePath}`);
       }
     }
   }
@@ -519,19 +524,29 @@ export async function aiGenerateFile(): Promise<void> {
   );
 
   for (const f of result.files) {
+    const safePath = sanitizePath(f.path);
+    if (!safePath) {
+      vscode.window.showWarningMessage(`Skipping unsafe path: ${f.path}`);
+      continue;
+    }
+
     const doc = await vscode.workspace.openTextDocument({ content: f.content, language: 'markdown' });
     await vscode.window.showTextDocument(doc);
 
     const action = await vscode.window.showInformationMessage(
-      `Generated ${f.path} (${f.tokens} tokens, ${result.latencyMs}ms). Save?`,
+      `Generated ${safePath} (${f.tokens} tokens, ${result.latencyMs}ms). Save?`,
       'Save', 'Discard',
     );
     if (action === 'Save') {
       const ws = vscode.workspace.workspaceFolders?.[0];
       if (ws) {
-        const uri = vscode.Uri.joinPath(ws.uri, f.path);
+        const dir = path.dirname(safePath);
+        if (dir && dir !== '.') {
+          await vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(ws.uri, dir));
+        }
+        const uri = vscode.Uri.joinPath(ws.uri, safePath);
         await vscode.workspace.fs.writeFile(uri, Buffer.from(f.content, 'utf8'));
-        vscode.window.showInformationMessage(`Saved ${f.path}`);
+        vscode.window.showInformationMessage(`Saved ${safePath}`);
       }
     }
   }
@@ -606,28 +621,29 @@ async function aiFixWithViolations(file: AgentFile, violations: Violation[]): Pr
   );
 
   for (const f of result.files) {
+    const safePath = sanitizePath(f.path);
+    if (!safePath) {
+      vscode.window.showWarningMessage(`Skipped unsafe path: ${f.path}`);
+      continue;
+    }
     const doc = await vscode.workspace.openTextDocument({ content: f.content, language: 'markdown' });
     await vscode.window.showTextDocument(doc, f.isNew ? vscode.ViewColumn.Beside : vscode.ViewColumn.Active);
 
-    if (!f.isNew) {
-      const action = await vscode.window.showInformationMessage(
-        `Fixed ${f.path}. Apply changes?`, 'Apply', 'Keep Original',
-      );
-      if (action === 'Apply') {
-        const ws = vscode.workspace.workspaceFolders?.[0];
-        if (ws) {
-          const uri = vscode.Uri.joinPath(ws.uri, f.path);
-          await vscode.workspace.fs.writeFile(uri, Buffer.from(f.content, 'utf8'));
-          vscode.window.showInformationMessage(`Applied fix to ${f.path}`);
-        }
-      }
-    } else {
+    const action = await vscode.window.showInformationMessage(
+      `${f.isNew ? 'Create' : 'Fix'} ${safePath}. Apply changes?`, 'Apply', 'Keep Original',
+    );
+    if (action === 'Apply') {
       const ws = vscode.workspace.workspaceFolders?.[0];
       if (ws) {
-        const uri = vscode.Uri.joinPath(ws.uri, f.path);
-        try { await vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(ws.uri, ...f.path.split('/').slice(0, -1))); } catch {}
+        if (f.isNew) {
+          const dirSegments = safePath.split('/').slice(0, -1);
+          if (dirSegments.length > 0) {
+            try { await vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(ws.uri, ...dirSegments)); } catch { /* dir exists */ }
+          }
+        }
+        const uri = vscode.Uri.joinPath(ws.uri, safePath);
         await vscode.workspace.fs.writeFile(uri, Buffer.from(f.content, 'utf8'));
-        vscode.window.showInformationMessage(`Created ${f.path}`);
+        vscode.window.showInformationMessage(`${f.isNew ? 'Created' : 'Applied fix to'} ${safePath}`);
       }
     }
   }

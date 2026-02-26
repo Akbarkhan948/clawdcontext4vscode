@@ -5,7 +5,7 @@
  * semantic contradiction detection, quality gates, AI-powered fixes.
  */
 
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 import { aiComplete } from './provider';
 import type { AiCompletionResult } from './provider';
 import { SYSTEM_PROMPT_VALIDATOR, SYSTEM_PROMPT_CONTRADICTION, SYSTEM_PROMPT_FIXER } from './prompts';
@@ -313,11 +313,11 @@ function extractKeywords(text: string): string[] {
 }
 
 function parseJsonResponse(text: string): any {
-  try { return JSON.parse(text); } catch {}
+  try { return JSON.parse(text); } catch { /* not raw JSON */ }
   const jsonMatch = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
-  if (jsonMatch) { try { return JSON.parse(jsonMatch[1]); } catch {} }
+  if (jsonMatch) { try { return JSON.parse(jsonMatch[1]); } catch { /* fenced block not JSON */ } }
   const objMatch = text.match(/\{[\s\S]*\}/);
-  if (objMatch) { try { return JSON.parse(objMatch[0]); } catch {} }
+  if (objMatch) { try { return JSON.parse(objMatch[0]); } catch { /* extracted object not JSON */ } }
   return null;
 }
 
