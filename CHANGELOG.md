@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.0] — Unreleased
+## [0.4.0] — 2026-02-26
 
 ### Added
 - **CER diff tracking** — Compare context efficiency between git commits to pinpoint what changed CER
