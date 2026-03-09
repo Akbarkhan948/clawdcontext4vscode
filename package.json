@@ -2,7 +2,7 @@
   "name": "clawdcontext",
   "displayName": "ClawdContext — Markdown OS for AI Agents",
   "description": "VS Code extension for AI coding agent Markdown systems: CER dashboard, mdcc-style diagnostics, lessons governance, SKILL.md security scanning, and quick-fix refactors.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "clawdcontext",
   "author": {
     "name": "Claudisiar"

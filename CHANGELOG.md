@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1] — 2026-02-26
+
+### Fixed
+- Corrected command count in README: 15 core + 11 AI = 26 total
+- Updated Marketplace README for conversion optimization (463 → 201 lines)
+
 ## [0.4.0] — 2026-02-26
 
 ### Added
@@ -29,7 +35,7 @@
 - Dashboard now shows AI provider status card
 - Security table shows active vs suppressed finding counts
 - Added 27 settings, 8 menu contribution points, 2 submenus, 1 walkthrough
-- Total commands: 25 (14 core + 11 AI)
+- Total commands: 26 (15 core + 11 AI)
 - AI providers: 5 (OpenAI, Anthropic, Azure OpenAI, Ollama, DeepSeek)
 
 ### Security
